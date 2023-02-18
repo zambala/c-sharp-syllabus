@@ -20,11 +20,11 @@ namespace Casting
             string a = "1";
             int b = 2;
             int c = 3;
-            int d = 4;
+            double d = 4.00;
             int e = 5;
 
             //fixme - should be 15 :|
-            int sum = int.Parse(a) + b + c + d + e;
+            int sum = int.Parse(a) + b + c + (int)d + e;
             Console.WriteLine(sum);
         }
 
@@ -37,8 +37,8 @@ namespace Casting
             float e = 5.3f;
 
             //fixme - should be 15.5 :| 
-            //float sum = a + b + c + d + e;
-            //Console.WriteLine(sum);
+            float sum = float.Parse(a) + (float)b + (float)c + (float)d + e;
+            Console.WriteLine(sum);
         }
     }
 }
