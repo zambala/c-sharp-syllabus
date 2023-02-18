@@ -21,14 +21,6 @@ namespace VariablesAndNames
             carsNotDriven = cars - (cars / drivers);
             carsDriven = cars / drivers;
 
-            cars = 100;
-            drivers = 28;
-            passengers = 90;
-            seatsInCar = 4.00;
-            carsNotDriven = cars - (cars / drivers);
-            carsDriven = cars / drivers;
-
-
             Console.WriteLine("There are " + cars + " cars available.");
             Console.WriteLine("There are only " + drivers + " drivers available.");
             Console.WriteLine("There will be " + carsNotDriven + " empty cars today.");
