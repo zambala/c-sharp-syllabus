@@ -20,12 +20,12 @@ namespace Casting
             string a = "1";
             int b = 2;
             int c = 3;
-            double d = 4;
-            float e = 5;
+            int d = 4;
+            int e = 5;
 
             //fixme - should be 15 :|
-            //int sum = a + b + c + d + e;
-            //Console.WriteLine(sum);
+            int sum = int.Parse(a) + b + c + d + e;
+            Console.WriteLine(sum);
         }
 
         static void Second()
