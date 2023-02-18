@@ -19,8 +19,6 @@ namespace Exercise8
             Console.WriteLine($"It's {years} and {days} days.");
 
             Console.ReadKey();
-            Console.ReadKey();
-            //tramt
         }
     }
 }
