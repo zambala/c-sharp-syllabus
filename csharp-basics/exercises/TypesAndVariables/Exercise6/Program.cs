@@ -6,21 +6,21 @@ namespace Exercise6
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter a Number : ");
+            Console.WriteLine("Enter many single digit Numbers : ");
 
-            string input = Console.ReadLine();
-            int num, sum = 0;
 
-            if (int.TryParse(input, out num))
+
+            int n = Math.Abs(int.Parse(Console.ReadLine()));
+            int sum = 0;
+            while (n != 0)
             {
-                for (; num > 0; num = num / 10)
-                {
-                    sum = sum + num % 10;
-                }
-
-                Console.WriteLine("The sum of the digits in the number: {0} is {1}", input, sum);
+                sum += n % 10;
+                n /= 10;
             }
-            else { Console.WriteLine("Invalid number format."); }
+
+            Console.Write($"Sum is= {sum} \n \n");
+
+            Console.WriteLine("Again, Enter many single digit Numbers : ");
 
             Console.ReadKey();
         }
