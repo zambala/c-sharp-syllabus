@@ -14,10 +14,11 @@ namespace Exercise9
             int timeMinutes = int.Parse(Console.ReadLine());
 
             int timeSeconds = timeMinutes * 60;
+            Console.WriteLine($"Time in Seconds is: {timeSeconds}");
             double timeHoursSimple = (double)timeMinutes / 60;
 
             var timeHours = TimeSpan.FromSeconds(timeSeconds);
-            Console.WriteLine("{0:00}:{1:00}:{2:00}", (int)timeHours.TotalHours, timeHours.Minutes, timeHours.Seconds);
+            Console.WriteLine("Time in Hours is {0:00}:{1:00}:{2:00}", (int)timeHours.TotalHours, timeHours.Minutes, timeHours.Seconds);
 
             decimal metersSecond = distance / timeSeconds;
             decimal KilometersHour = (distance / 1000) / ((decimal)timeSeconds / 3600);
@@ -28,7 +29,7 @@ namespace Exercise9
             Console.WriteLine($"Your speed in km/h is {KilometersHour}");
             Console.WriteLine($"Your speed in miles/h is {milesHour}");
             
-            Console.WriteLine($"distance is {distance} Meters and it took {timeMinutes} Minutes, {timeSeconds} seconds or {timeHours} hours or {timeHoursSimple}, speed {metersSecond} m/s, {KilometersHour} km/h or {milesHour} mph");
+            Console.WriteLine($"distance is {distance} Meters and it took {timeMinutes} Minutes, {timeSeconds} seconds or {timeHours} hours or {timeHoursSimple} simple Hours, speed {metersSecond} m/s, {KilometersHour} km/h or {milesHour} mph");
 
             Console.ReadKey();
         }
