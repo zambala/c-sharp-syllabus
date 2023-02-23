@@ -159,3 +159,5 @@ Create a function that takes a number and returns "M" if the number is a Moran n
   Moran(133) ➞ "M"
   Moran(134) ➞ "Neither"
 ```
+
+prime numbers can't be divided by other numbers than itself or 1.

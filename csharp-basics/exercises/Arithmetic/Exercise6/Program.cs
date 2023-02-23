@@ -20,9 +20,9 @@ namespace Exercise6
             {
 
 
-                if (i % 3 == 0) Console.WriteLine("Coza");
-                else if (i % 5 == 0) Console.WriteLine("Loza");
-                else if (i % 7 == 0) Console.WriteLine("Woza");
+                //if (i % 3 == 0) Console.WriteLine("Coza");
+                //else if (i % 5 == 0) Console.WriteLine("Loza");
+                //else if (i % 7 == 0) Console.WriteLine("Woza");
                 //else Console.WriteLine(i);
 
 

@@ -77,6 +77,7 @@ namespace CalculateArea
             Console.WriteLine("Enter length of the triangle's base? ");
             //todo
             //read key value
+            var triangle = Console.ReadLine();
 
             // Get the height
             Console.WriteLine("Enter triangle's height? ");
