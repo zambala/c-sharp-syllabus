@@ -8,8 +8,6 @@ namespace Exercise6
         {
             Console.WriteLine("Enter many single digit Numbers : ");
 
-
-
             int n = Math.Abs(int.Parse(Console.ReadLine()));
             int sum = 0;
             while (n != 0)
@@ -19,7 +17,6 @@ namespace Exercise6
             }
 
             Console.Write($"Sum is= {sum} \n \n");
-
             Console.WriteLine("Again, Enter many single digit Numbers : ");
 
             Console.ReadKey();

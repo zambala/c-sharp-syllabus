@@ -6,7 +6,6 @@ namespace Exercise5
     {
         static void Main(string[] args)
         {
-            
             var teachJavascript = "Andis";
             var classJavascript = "Javascript";
 
@@ -39,7 +38,6 @@ namespace Exercise5
             Console.WriteLine("{0, -6 }{1, -6 } {2, -7 } {3, -7 }{4, -7 }", "+------------", "-----------------------------------+", "", "", "");
 
             Console.ReadKey();
-
         }
     }
 }

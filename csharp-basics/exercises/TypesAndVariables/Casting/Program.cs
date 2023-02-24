@@ -14,7 +14,6 @@ namespace Casting
             Second();
             Console.ReadKey();
         }
-
         static void First()
         {
             string a = "1";
@@ -23,11 +22,9 @@ namespace Casting
             double d = 4.00;
             int e = 5;
 
-            //fixme - should be 15 :|
             int sum = int.Parse(a) + b + c + (int)d + e;
             Console.WriteLine(sum);
         }
-
         static void Second()
         {
             string a = "1";
@@ -36,7 +33,6 @@ namespace Casting
             double d = 4.2;
             float e = 5.3f;
 
-            //fixme - should be 15.5 :| 
             float sum = float.Parse(a) + (float)b + (float)c + (float)d + e;
             Console.WriteLine(sum);
         }

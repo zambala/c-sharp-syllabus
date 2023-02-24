@@ -6,7 +6,6 @@ namespace Exercise7
     {
         static void Main(string[] args)
         {
-
             Console.WriteLine("Enter your Bio in 1 sentence!");
             string bio = Console.ReadLine();
 

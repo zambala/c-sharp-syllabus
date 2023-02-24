@@ -6,7 +6,6 @@ namespace Exercise9
     {
         static void Main(string[] args)
         {
-
             Console.Write("Input distance(metres): ");
             decimal distance = Convert.ToDecimal(Console.ReadLine());
 
@@ -24,7 +23,6 @@ namespace Exercise9
             decimal KilometersHour = (distance / 1000) / ((decimal)timeSeconds / 3600);
             decimal milesHour = KilometersHour / (decimal)1.609;
 
-          
             Console.WriteLine($"Your speed in metres/sec is {metersSecond}");
             Console.WriteLine($"Your speed in km/h is {KilometersHour}");
             Console.WriteLine($"Your speed in miles/h is {milesHour}");
