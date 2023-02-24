@@ -19,7 +19,7 @@ namespace Casting
             string a = "1";
             int b = 2;
             int c = 3;
-            double d = 4.00;
+            double d = 4;
             int e = 5;
 
             int sum = int.Parse(a) + b + c + (int)d + e;
