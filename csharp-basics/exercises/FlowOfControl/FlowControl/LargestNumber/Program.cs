@@ -17,10 +17,9 @@ namespace LargestNumber
 
             if (input1 > input2 && input1 > input3)
                    Console.Write("Number one is the largest!");
-                
+            
             else if(input2 > input1 && input2 > input3 )
-                  Console.Write("Number two is the largest!");
-                
+                  Console.Write("Number two is the largest!"); 
             else
                 Console.Write("Number three is the largest!");
         }
