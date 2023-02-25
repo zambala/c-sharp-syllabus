@@ -49,7 +49,7 @@ switch (inChar)
  }
  ```
 
- # Exercise #6
+# Exercise #6
  See [GetTheCentury](./FlowControl/GetTheCentury/)
  Create a function that takes in a year and returns the correct century.
  ```C#
