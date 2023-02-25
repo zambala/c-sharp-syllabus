@@ -228,3 +228,6 @@ FindNemo("I Nemo am") ➞ "I found Nemo at 2!"
  - Nemo will always look like Nemo, and not NeMo or other capital variations.
  - Nemo's, or anything that says Nemo with something behind it, doesn't count as Finding Nemo.
  - If there are multiple Nemo's in the sentence, only return the first one.
+
+
+ init
