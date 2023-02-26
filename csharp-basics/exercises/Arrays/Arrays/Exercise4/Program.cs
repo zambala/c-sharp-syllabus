@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,13 +19,14 @@ namespace Exercise4
                 1456, 2265, 1457, 2456
             };
 
-            /*
-            fixme - check if contains number 1245 
-            for (?) {
-                ......
+            if (myArray.Contains(1254))
+            {
                 Console.WriteLine("Contains!");
             }
-            */
+            else
+            {
+                Console.WriteLine("Does not contain");
+            }
         }
     }
 }
