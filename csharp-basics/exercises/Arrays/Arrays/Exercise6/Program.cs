@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Exercise6
 {
@@ -6,29 +7,28 @@ namespace Exercise6
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            var sum = 0;
-            Console.WriteLine("Please enter a min number");
-            int minNumber = int.Parse(Console.ReadLine());
-            Console.WriteLine("Please enter a max number");
-            int maxNumber = int.Parse(Console.ReadLine());
-            int i;
-            int[] arr = new int[2]; // 5 size array
+            int[] values = RandomUtils.generateArray(10);
 
-            // Accepting value from user 
-            for (i = minNumber; i <= maxNumber; i++)
+            var arrayCopy = new int[10];
+            values.CopyTo(arrayCopy, 0);
+
+            values[values.Length - 1] = -7;
+
+            Console.WriteLine(string.Join(",", values));
+            Console.WriteLine(string.Join(",", arrayCopy));
+        }
+        public static class RandomUtils
+        {
+            public static int[] generateArray(int count)
             {
-                Console.Write("\nEnter your number:\t");
-                //Storing value in an array
-                arr[i] = Convert.ToInt32(Console.ReadLine());
+                Random random = new Random();
+                int[] values = new int[count];
+
+                for (int i = 0; i < count; ++i)
+                    values[i] = random.Next(1, 100);
+
+                return values;
             }
-            Console.WriteLine("\n\n");
-            //Printing the value on console
-            for (i = 0; i < 5; i++)
-            {
-                Console.WriteLine("you entered {0}", arr[i]);
-            }
-            Console.ReadLine();
         }
     }
 }
