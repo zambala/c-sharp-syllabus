@@ -9,7 +9,6 @@ namespace Exercise4
 {
     class Program
     {
-        //TODO: Write a C# program to test if an array contains a specific value.
         private static void Main(string[] args)
         {
             int[] myArray =
@@ -19,7 +18,9 @@ namespace Exercise4
                 1456, 2265, 1457, 2456
             };
 
-            if (myArray.Contains(1254))
+            var find = 1245;
+
+            if (myArray.Contains(find))
             {
                 Console.WriteLine("Contains!");
             }
