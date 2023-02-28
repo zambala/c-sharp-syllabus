@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 
 namespace Exercise10
 {
@@ -7,31 +6,37 @@ namespace Exercise10
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            int[] input = { 92, 6, 73, -77, 81, -90, 99, 8, -85, 34, };
-            CountPosSumNeg([92, 6, 73, -77, 81, -90, 99, 8, -85, 34]);
+            int[] input = new int[] {  92, 6, 73, -77, 81, -90, 99, 8, -85, 34,  };
+
+            Console.WriteLine(String.Join(" ", CountPosSumNeg(input)));
+            Console.ReadKey();
         }
-
-        public int[] CountPosSumNeg(int[] input)
+        public static int[] CountPosSumNeg(int[] input)
         {
-            int length = input.Length;
+            int sumPos = 0;
+            int sumNeg = 0;
             int[] arraySecond = new int[2];
-            var sumPos = 0;
-            var sumNeg = 0;
 
-            for (int i = 0; i < length; i++) 
+            if (input.Length > 0)
             {
-                if (input[i] > 0)
+                for (int i = 0; i < input.Length; i++)
                 {
-                    sumPos += input[i];
+                    if (input[i] > 0)
+                    {
+                        sumPos++;
+                    }
+                    else if (input[i] < 0)
+                    {
+                        sumNeg += input[i];
+                    }
                 }
-                else
-                {
-                    sumNeg += input[i];
-                }
+
+                arraySecond[0] = sumPos;
+                arraySecond[1] = sumNeg;
+
                 return arraySecond;
             }
-            return arraySecond;
+            return input;
         }
     }
 }

@@ -7,24 +7,23 @@ namespace Exercise9
         static void Main(string[] args)
         {
             string[] arrayFirst = { "samuel", "MABELLE", "letitia", "meridith" };
+            Console.WriteLine(string.Join(",", arrayFirst));
 
+            CapMe(arrayFirst); 
         }
-
-
-
-        public static string CapMe(string[] arrayFirst)
+        public static string[] CapMe(string[] arrayFirst)
         {
             
             int length = arrayFirst.Length;
             string[] arraySecond = new string[length];
 
-
-            foreach (string word in arrayFirst)
+            for (int i = 0; i < length; i++)
             {
-                Console.WriteLine(word[0]);
+                arraySecond[i] = arrayFirst[i].Substring(0, 1).ToUpper() + arrayFirst[i].Substring(1).ToLower();
             }
-            return arraySecond[arrayFirst[]];
+            Console.WriteLine(string.Join(",", arraySecond));
 
+            return arraySecond;
         }
         }
 }
