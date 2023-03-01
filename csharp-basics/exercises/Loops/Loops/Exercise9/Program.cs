@@ -6,8 +6,8 @@ namespace Exercise9
     {
         static void Main(string[] args)
         {
-            bool win = false;
             Random random = new Random();
+            bool win = false;
 
             Console.WriteLine("What the desired sum of both dices should be?");
             int desiredSum = int.Parse(Console.ReadLine());
