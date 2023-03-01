@@ -6,7 +6,23 @@ namespace Exercise9
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            bool win = false;
+            Random random = new Random();
+
+            Console.WriteLine("What the desired sum of both dices should be?");
+            int desiredSum = int.Parse(Console.ReadLine());
+
+            while (!win)
+            {
+                int randomNumber1 = random.Next(1, 7);
+                int randomNumber2 = random.Next(1, 7);
+                Console.WriteLine($"{randomNumber1} and {randomNumber2} = {randomNumber1 + randomNumber2}");
+
+                if (desiredSum == randomNumber1 + randomNumber2)
+                {
+                    win = true;
+                }
+            }
         }
     }
 }
