@@ -30,6 +30,7 @@ namespace Exercise11
                     Console.Write(char.ToUpper(charArray[i]));
                 }
             }
+
             Console.WriteLine();
         }
     }

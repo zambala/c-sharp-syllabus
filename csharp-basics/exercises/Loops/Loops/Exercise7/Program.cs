@@ -11,6 +11,7 @@ namespace Piglet
             Random random = new Random();
 
             Console.WriteLine("Welcome to Piglet!");
+
             while (continueGame)
             {
                 int randomNumber = random.Next(1, 7);

@@ -6,7 +6,6 @@ namespace Exercise3
     {
         static void Main(string[] args)
         {
-
             int[] arrayRandom = new int[20];
             Random rand = new Random();
 
@@ -14,6 +13,7 @@ namespace Exercise3
             {
                 arrayRandom[i] = rand.Next(1, 20);
             }
+
             Console.Write($"Random numbers are: " + string.Join(",", arrayRandom) + "\n");
 
             Console.WriteLine("Enter the position out of 20 random numbers you want to know");

@@ -11,7 +11,7 @@ namespace Exercise6
             
             for(int i = 0; i <= number; i++)
             {
-                if(i % 15 == 0)
+                if(i % 3 == 0 && i % 5 == 0)
                 {
                     Console.Write("FizzBuzz ");
                 }
@@ -19,7 +19,7 @@ namespace Exercise6
                 {
                     Console.Write("Fizz ");
                 }
-                else if (i % 15 == 0)
+                else if (i % 5 == 0)
                 {
                     Console.Write("Buzz ");
                 }
@@ -27,6 +27,7 @@ namespace Exercise6
                 {
                     Console.Write(i + " ");
                 }
+
                 if(i % 20 == 0)
                 {
                     Console.Write("\n");

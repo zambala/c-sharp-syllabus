@@ -9,13 +9,12 @@ namespace Exercise2
             int i, n;
             
             Console.WriteLine("Input number of terms : ");
-            n = Convert.ToInt32(Console.ReadLine());
+            n = int.Parse(Console.ReadLine());
 
             for (i = 1; i <= n; i++)
             {
                 Console.WriteLine(i*i);
             }
-
         }
     }
 }
