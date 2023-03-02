@@ -24,7 +24,6 @@ namespace TicTacToe
             }
 
             DisplayBoard(player);
-
         }
 
         private static void DisplayBoard(char player)
