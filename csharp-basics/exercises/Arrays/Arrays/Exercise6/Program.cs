@@ -16,7 +16,10 @@ namespace Exercise6
 
             Console.WriteLine(string.Join(",", values));
             Console.WriteLine(string.Join(",", arrayCopy));
+
+            Console.ReadKey();
         }
+
         public static class RandomUtils
         {
             public static int[] generateArray(int count)

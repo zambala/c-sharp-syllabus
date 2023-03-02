@@ -11,6 +11,7 @@ namespace Exercise10
             Console.WriteLine(String.Join(" ", CountPosSumNeg(input)));
             Console.ReadKey();
         }
+
         public static int[] CountPosSumNeg(int[] input)
         {
             int sumPos = 0;
@@ -36,6 +37,7 @@ namespace Exercise10
 
                 return arraySecond;
             }
+
             return input;
         }
     }

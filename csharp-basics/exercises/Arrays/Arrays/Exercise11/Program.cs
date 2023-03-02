@@ -18,7 +18,8 @@ namespace Exercise11
             { 
                 return "I can't find Nemo :("; 
             }
-            else { 
+            else 
+            { 
                 return $"I found Nemo at {index + 1}!";
             }
         }

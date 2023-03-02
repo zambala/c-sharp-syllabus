@@ -21,9 +21,10 @@ namespace Exercise9
             {
                 arraySecond[i] = arrayFirst[i].Substring(0, 1).ToUpper() + arrayFirst[i].Substring(1).ToLower();
             }
+
             Console.WriteLine(string.Join(",", arraySecond));
 
             return arraySecond;
         }
-        }
+    }
 }
