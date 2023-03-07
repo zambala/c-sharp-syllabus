@@ -24,7 +24,24 @@ namespace Exercise1
 
             //todo - replace array with an List and print out the results
 
+            List<string> list = new List<string>(array);
+
+            foreach (string car in list)
+            {
+                Console.WriteLine(car);
+            }
+
+            Console.WriteLine();
+
             //todo - replace array with a HashSet and print out the results
+
+            HashSet<string> hashSet = new HashSet<string>(array);
+            foreach (string car in hashSet)
+            {
+                Console.WriteLine(car);
+            }
+
+            Console.WriteLine();
 
             //todo - replace array with a Dictionary (use brand as key and origination as value) and print out the results
         }
