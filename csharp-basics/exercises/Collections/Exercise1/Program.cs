@@ -8,21 +8,9 @@ namespace Exercise1
 {
     class Program
     {
-        /**
-           * Origination:
-           * Audi -> Germany
-           * BMW -> Germany
-           * Honda -> Japan
-           * Mercedes -> Germany
-           * VolksWagen -> Germany
-           * Tesla -> USA
-           */
-
         private static void Main(string[] args)
         {
             string[] array = { "Audi", "BMW", "Honda", "Mercedes", "VolksWagen", "Mercedes", "Tesla" };
-
-            //todo - replace array with an List and print out the results
 
             List<string> list = new List<string>(array);
 
@@ -33,9 +21,8 @@ namespace Exercise1
 
             Console.WriteLine();
 
-            //todo - replace array with a HashSet and print out the results
-
             HashSet<string> hashSet = new HashSet<string>(array);
+
             foreach (string car in hashSet)
             {
                 Console.WriteLine(car);
@@ -43,7 +30,21 @@ namespace Exercise1
 
             Console.WriteLine();
 
-            //todo - replace array with a Dictionary (use brand as key and origination as value) and print out the results
+            Console.WriteLine("Origination:\n");
+            
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            dictionary.Add("Audi", "Germany");
+            dictionary.Add("BMW", "Germany");
+            dictionary.Add("Honda", "Japan");
+            dictionary.Add("Mercedes", "Germany");
+            dictionary.Add("VolksWagen", "Germany");
+            dictionary.Add("Tesla", "USA");
+
+            foreach (var car in dictionary)
+            {
+                Console.WriteLine($"{car.Key} -> {car.Value}");
+            }
         }
     }
 }
