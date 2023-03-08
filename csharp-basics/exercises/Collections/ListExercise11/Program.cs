@@ -10,19 +10,43 @@ namespace ListExercise11
     {
         static void Main(string[] args)
         {
-            //TODO: Create an List with string elements
+            var carList = new List<string>();
 
-            //TODO: Add 10 values to list
+            string[] valuesAdded =
+            {
+                "Audi", "BMW", "Ferrari", "Ford", "Mercedes", "Opel", "Honda", "Kamaz", "Bugatti", "Volvo"
+            };
 
-            //TODO: Add new value at 5th position
+            carList.AddRange(valuesAdded);
 
-            //TODO: Change value at last position (Calculate last position programmatically)
+            Console.WriteLine(string.Join(",", carList));
+            Console.WriteLine();
 
-            //TODO: Sort your list in alphabetical order
+            carList.Insert(4, "Mazda");
 
-            //TODO: Check if your list contains "Foobar" element
+            Console.WriteLine(string.Join(",", carList));
+            Console.WriteLine();
 
-            //TODO: Print each element of list using loop
+            carList[carList.Count - 1] = "RollsRoyce";
+
+            Console.WriteLine(string.Join(",", carList));
+            Console.WriteLine();
+
+            Console.WriteLine("List in alphabetical order : \n");
+            carList.Sort();
+
+            Console.WriteLine(string.Join(",", carList));
+            Console.WriteLine();
+
+            Console.WriteLine("Does my list contain a \"Foobar\"?: " + carList.Contains("Foobar"));
+            Console.WriteLine("\n");
+
+            foreach (var car in carList)
+            {
+                Console.Write(car + " ");
+            }
+
+            Console.WriteLine("\n");
         }
     }
 }
