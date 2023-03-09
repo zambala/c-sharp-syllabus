@@ -23,13 +23,21 @@ namespace Exercise10
 
             stringHashSet.Clear();
 
-            Console.WriteLine(CheckForDuplicate(stringHashSet));
-            Console.ReadKey();
-        }
+            Console.WriteLine("Trying to add the same value 5 times...");
+            stringHashSet.Add("same");
+            stringHashSet.Add("same");
+            stringHashSet.Add("same");
+            stringHashSet.Add("same");
+            stringHashSet.Add("same");
 
-        public static bool CheckForDuplicate(HashSet<string> set)
-        {
-            return set.Count != set.Distinct().Count();
+            Console.WriteLine("The HashSet now contains:");
+
+            foreach (var entry in stringHashSet)
+            {
+                Console.WriteLine(entry);
+            }
+
+            Console.ReadKey();
         }
     }
 }
