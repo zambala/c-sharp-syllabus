@@ -8,20 +8,20 @@ namespace Exercise4
     {
         static void Main(string[] args)
         {
-            var Names = new List<string>();
+            var names = new List<string>();
             var userInput = "name";
 
-            while (true)
+            while (userInput.Length >= 0)
             {
                 if (userInput.Length > 0)
                 {
                     Console.Write("Write a name: ");
                     userInput = Console.ReadLine();
-                    Names.Add(userInput);
+                    names.Add(userInput);
                 }
                 else
                 {
-                    var newList = Names.Distinct().ToList();
+                    var newList = names.Distinct().ToList();
                     Console.WriteLine("Unique name list contains: " + String.Join(" ", newList));
                     Console.ReadKey();
                     Environment.Exit(0);

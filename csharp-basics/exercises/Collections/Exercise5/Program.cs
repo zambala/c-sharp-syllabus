@@ -12,8 +12,6 @@ namespace Exercise5
 
         public static void HappyNumbers()
         {
-            while (true)
-            {
                 var numberList = new List<int>();
                 Console.WriteLine("Enter a number");
                 var userInput = Console.ReadLine();
@@ -57,7 +55,6 @@ namespace Exercise5
                 {
                     Console.WriteLine("Not a number...");
                 }
-            }
         }
 
         public static int CalculateSquare(int num)
