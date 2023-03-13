@@ -11,12 +11,19 @@ namespace NumbersFromRange
             Console.WriteLine("Hello World!");
             var random = new Random();
             var numbers = new List<int>();
+
             while (numbers.Count() < 10)
             {
                 numbers.Add(random.Next(1, 100));
             }
 
-            //ToDo: Given an array of integers, write a query that returns list of numbers greater than 30 and less than 100.
+            var selectedNumbers = numbers.Where(num => num > 30).Where(num => num < 100);
+
+            foreach (var n in selectedNumbers)
+            {
+                Console.Write($"{n} ");
+            }
+            Console.WriteLine();
         }
     }
 }
