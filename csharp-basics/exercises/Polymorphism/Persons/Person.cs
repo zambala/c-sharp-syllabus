@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Persons
 {
     public class Person
     {
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string Address { get; }
-        public int Id { get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public int Id { get; set; }
 
         public Person(string firstName, string lastName, string address, int id)
         {

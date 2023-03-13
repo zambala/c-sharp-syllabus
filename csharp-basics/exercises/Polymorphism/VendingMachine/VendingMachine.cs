@@ -7,9 +7,9 @@ namespace VendingMachine
     public class VendingMachine : IVendingMachine
     {
         public readonly string[] AcceptedMoney = { "0,10 €", "0,20 €", "0,50 €", "1,00 €", "2,00 €" };
-        public string Manufacturer { get; }
+        public string Manufacturer { get; set; }
         public bool HasProducts => Array.Exists(Products, product => product.Available > 0);
-        public Money Amount { get; private set; }
+        public Money Amount { get; set; }
         public Product[] Products { get; set; }
 
         public VendingMachine(string manufacturer, int amountOfSlots)
