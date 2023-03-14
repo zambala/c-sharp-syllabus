@@ -10,30 +10,40 @@ namespace FuelConsumptionCalculator
     {
         private static void Main(string[] args)
         {
-            int startKilometers;
-            int liters;
-            
+            Car car1 = new Car(0);
+            Car car2 = new Car(0);
+
+            Console.Write("Enter Start KM for the first car: ");
+            car1._startKilometers = Convert.ToDouble(Console.ReadLine());
+            car1 = new Car(car1._startKilometers);
+
+            Console.Write("Enter Start KM for the second car: ");
+            car2._startKilometers = Convert.ToDouble(Console.ReadLine());
+            car2 = new Car(car2._startKilometers);
+
             Console.WriteLine();
 
-            Car car = new Car(0);
-            Car car1 = new Car(0);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
-                Console.Write("Enter first reading: ");
-                startKilometers = Convert.ToInt32(Console.ReadLine());    
-                Console.Write("Enter liters reading: ");
-                liters = Convert.ToInt32(Console.ReadLine());
-                car.FillUp(startKilometers, liters);
-                
-                Console.Write("Enter first reading: ");
-                startKilometers = Convert.ToInt32(Console.ReadLine());    
-                Console.Write("Enter liters reading: ");
-                liters = Convert.ToInt32(Console.ReadLine());
-                car1.FillUp(startKilometers, liters);
+                Console.Write("Enter End KM for the first car: ");
+                car1._endKilometers = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Enter liters used for 1 car: ");
+                car1._liters = Convert.ToDouble(Console.ReadLine());
+
+                car1.FillUp(car1._endKilometers, car1._liters);
+
+                Console.WriteLine();
+
+                Console.Write("Enter End KM for the second car: ");
+                car2._startKilometers = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Enter liters used for 2 car: ");
+                car2._liters = Convert.ToDouble(Console.ReadLine());
+                car2.FillUp(car2._endKilometers, car2._liters);
             }
 
-            Console.WriteLine("Kilometers per liter are " + car.CalculateConsumption() + " gasHog:" + car.GasHog());
-            Console.WriteLine("Car1 Kilometers per liter are " + car1.CalculateConsumption()+ " economyCar:" + car.EconomyCar());
+            Console.WriteLine();
+            Console.WriteLine("Kilometers per liter are " + car1.CalculateConsumption() + " gasHog:" + car1.GasHog());
+            Console.WriteLine("Car2 Kilometers per liter are " + car2.CalculateConsumption() + " economyCar:" + car2.EconomyCar());
             Console.ReadKey();
         }
     }
