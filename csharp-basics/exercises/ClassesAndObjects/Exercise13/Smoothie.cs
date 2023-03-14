@@ -12,15 +12,16 @@ namespace Exercise13
 
         private decimal ProductPrice(string fruit)
         {
-            Dictionary<string, decimal> PriceList = new Dictionary<string, decimal>();
-
-            PriceList.Add("Strawberries", (decimal)1.50);
-            PriceList.Add("Banana", (decimal)0.50);
-            PriceList.Add("Mango", (decimal)2.50);
-            PriceList.Add("Blueberries", (decimal)1.00);
-            PriceList.Add("Raspberries", (decimal)1.00);
-            PriceList.Add("Apple", (decimal)1.75);
-            PriceList.Add("Pineapples", (decimal)3.50);
+            Dictionary<string, decimal> PriceList = new Dictionary<string, decimal>
+            {
+                { "Strawberries", (decimal)1.50 },
+                { "Banana", (decimal)0.50 },
+                { "Mango", (decimal)2.50 },
+                { "Blueberries", (decimal)1.00 },
+                { "Raspberries", (decimal)1.00 },
+                { "Apple", (decimal)1.75 },
+                { "Pineapples", (decimal)3.50 }
+            };
 
             if (!PriceList.TryGetValue(fruit, out decimal value))
             {
