@@ -9,6 +9,7 @@ namespace Exercise3_
         {
             return _fuelAmount;
         }
+
         public void IncrementFuel()
         {
             if (_fuelAmount < 70)

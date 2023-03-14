@@ -14,7 +14,7 @@ namespace EnergyDrinks
 
         private static void Main(string[] args)
         {
-            double energyDrinkers = CalculateEnergyDrinkers(NumberedSurveyed);
+            int energyDrinkers = CalculateEnergyDrinkers(NumberedSurveyed);
             double preferCitrus = CalculatePreferCitrus(NumberedSurveyed);
 
             Console.WriteLine("Total number of people surveyed " + NumberedSurveyed);
@@ -22,7 +22,7 @@ namespace EnergyDrinks
             Console.WriteLine(preferCitrus + " of those " + "prefer citrus flavored energy drinks.");
         }
 
-        public static double CalculateEnergyDrinkers(int numberSurveyed)
+        public static int CalculateEnergyDrinkers(int numberSurveyed)
         {
             int energyDrinkers = (int)(numberSurveyed * PurchasedEnergyDrinks);
             return energyDrinkers;

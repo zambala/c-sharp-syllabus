@@ -8,35 +8,35 @@ namespace Exercise1
 {
     internal class Product
     {
-        public string name;
-        public double _priceAtStart;
-        public int amountAtStart;
+        public string Name;
+        public double PriceAtStart;
+        public int AmountAtStart;
 
-        public Product(string Name, double PriceAtStart, int AmountAtStart)
+        public Product(string name, double priceAtStart, int amountAtStart)
         {
-            name = Name;
-            _priceAtStart = PriceAtStart;
-            amountAtStart = AmountAtStart;
+            Name = name;
+            PriceAtStart = priceAtStart;
+            AmountAtStart = amountAtStart;
         }
 
         public string PrintProduct()
         {
-            return name + ", price " + String.Format("{0:0.00} EUR", _priceAtStart) + ", available " + amountAtStart + " items.";
+            return Name + ", price " + String.Format("{0:0.00} EUR", PriceAtStart) + ", available " + AmountAtStart + " items.";
         }
 
         public void ChangePrice(double newPrice)
         {
-            _priceAtStart = newPrice;
+            PriceAtStart = newPrice;
         }
 
         public int ChangeSmallerCount(int newCount)
         {
-            return amountAtStart -= newCount;
+            return AmountAtStart -= newCount;
         }
 
         public int ChangeBiggerCount(int newCount)
         {
-            return amountAtStart += newCount;
+            return AmountAtStart += newCount;
         }
     }
 }

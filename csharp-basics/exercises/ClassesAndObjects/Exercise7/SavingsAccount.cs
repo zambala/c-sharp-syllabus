@@ -1,43 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Exercise7
+﻿namespace Exercise7
 {
     internal class SavingsAccount
     {
-        public decimal _interestRate;
-        public decimal _balance;
-        public decimal _totalDeposit;
-        public decimal _totalWithdrawal;
-        public decimal _totalInterest;
+        public decimal InterestRate;
+        public decimal Balance;
+        public decimal TotalDeposit;
+        public decimal TotalWithdrawal;
+        public decimal TotalInterest;
 
         public SavingsAccount(decimal startingBalance, decimal interest)
         {
-            _balance = startingBalance;
-            _interestRate = interest;
+            Balance = startingBalance;
+            InterestRate = interest;
         }
 
         public void Withdrawal(decimal amount)
         {
-            _balance -= amount;
-            _totalWithdrawal += amount;
+            Balance -= amount;
+            TotalWithdrawal += amount;
         }
 
         public void Deposit(decimal amount)
         {
-            _balance += amount;
-            _totalDeposit += amount;
+            Balance += amount;
+            TotalDeposit += amount;
         }
 
         public void Interest(decimal interest)
         {
-            var monthlyInterest = _interestRate / 12 * _balance;
+            var monthlyInterest = InterestRate / 12 * Balance;
 
-            _totalInterest += monthlyInterest;
-            _balance = monthlyInterest + _balance;
+            TotalInterest += monthlyInterest;
+            Balance = monthlyInterest + Balance;
         }
     }
 }

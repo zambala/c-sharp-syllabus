@@ -27,12 +27,7 @@ namespace Exercise12
         }
         private string IsTestPassed(ITestpaper paper, string score)
         {
-            if (ConvertToNumber(score) >= ConvertToNumber(paper.PassMark))
-            {
-                return "Passed!";
-            }
-
-            return "Failed!";
+            return ConvertToNumber(score) >= ConvertToNumber(paper.PassMark) ? "Passed!" : "Failed!";
         }
 
         private string TestScore(ITestpaper paper, string[] answers)
@@ -48,11 +43,6 @@ namespace Exercise12
                 }
 
                 totalQuestions++;
-            }
-
-            if (correctAnswers == 0)
-            {
-                return "0%";
             }
 
             return Math.Round((decimal)correctAnswers / totalQuestions * 100) + "%";

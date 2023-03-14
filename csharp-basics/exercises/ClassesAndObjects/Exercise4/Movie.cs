@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Exercise4
 {
     internal class Movie
     {
-
         private string _title;
         private string _studio;
         private string _rating;

@@ -10,8 +10,8 @@ namespace Exercise6
     {
         private string _name;
         private bool _isMale;
-        public Dog Mother { private get; set; }
-        public Dog Father { private get; set; }
+        public Dog Mother { get; set; }
+        public Dog Father { get; set; }
 
         public Dog(string name, bool isMale, Dog mother = null, Dog father = null)
         {

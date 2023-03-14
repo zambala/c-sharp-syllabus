@@ -42,10 +42,10 @@ namespace Exercise7
             }
 
             Console.WriteLine();
-            Console.WriteLine($"Total deposited: {Math.Round(acc1._totalDeposit, 2)}");
-            Console.WriteLine($"Total withdrawn: {Math.Round(acc1._totalWithdrawal, 2)}");
-            Console.WriteLine($"Interest earned: {Math.Round(acc1._totalInterest, 2)}");
-            Console.WriteLine($"Ending balance: {Math.Round(acc1._balance, 2)}");
+            Console.WriteLine($"Total deposited: {Math.Round(acc1.TotalDeposit, 2)}");
+            Console.WriteLine($"Total withdrawn: {Math.Round(acc1.TotalWithdrawal, 2)}");
+            Console.WriteLine($"Interest earned: {Math.Round(acc1.TotalInterest, 2)}");
+            Console.WriteLine($"Ending balance: {Math.Round(acc1.Balance, 2)}");
             Console.ReadKey();
         }
     }

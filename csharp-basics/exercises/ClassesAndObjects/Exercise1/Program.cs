@@ -19,7 +19,7 @@ namespace Exercise1
             product2.ChangeSmallerCount(2);
             product2.ChangeBiggerCount(1);
 
-            Console.WriteLine("\nName: " + product2.name + "\nNew Price: " + product2._priceAtStart + " EUR\nItems Left: " + product2.amountAtStart + " items");
+            Console.WriteLine("\nName: " + product2.Name + "\nNew Price: " + product2.PriceAtStart + " EUR\nItems Left: " + product2.AmountAtStart + " items");
         }
     }
 }

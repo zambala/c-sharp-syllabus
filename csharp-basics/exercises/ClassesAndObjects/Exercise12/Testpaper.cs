@@ -10,18 +10,19 @@ namespace Exercise12
     {
         public string Subject
         {
-            get;
+            get; set;
         }
 
         public string[] MarkScheme
         {
-            get;
+            get; set;
         }
 
         public string PassMark
         {
-            get;
+            get; set;
         }
+
         public TestPaper(string subject, string[] markScheme, string passMark)
         {
             Subject = subject;
