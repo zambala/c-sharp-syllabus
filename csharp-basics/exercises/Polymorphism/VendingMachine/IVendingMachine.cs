@@ -9,11 +9,10 @@ namespace VendingMachine
     public interface IVendingMachine
     {
         string Manufacturer { get; }
-
         public bool HasProducts { get; }
-
         public Money Amount { get; }
         Product[] Products { get; set; }
+
         Money InsertCoin(Money amount);
 
         Money ReturnMoney();
