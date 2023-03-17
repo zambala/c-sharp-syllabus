@@ -76,7 +76,10 @@ namespace VideoStore
         {
             Console.WriteLine("Enter movie name");
             string movieName = Console.ReadLine();
+            Console.WriteLine("Enter rating");
+            int rating = Convert.ToInt32(Console.ReadLine());
             _videoStore.ReturnVideo(movieName);
+            _videoStore.TakeUsersRating(rating, movieName);
         }
     }
 }
