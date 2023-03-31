@@ -124,8 +124,8 @@ namespace ScooterRental.Test
             _inventory.Add(new Scooter("1", 0.2m));
 
             //Act
-            var scooerList = _scooterService.GetScooters();
-            scooerList.Add(new Scooter("2", 0.2m));
+            var scooterList = _scooterService.GetScooters();
+            scooterList.Add(new Scooter("2", 0.2m));
             var scooterList2 = _scooterService.GetScooters();
 
             //Assert
