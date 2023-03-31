@@ -6,11 +6,11 @@ namespace Hierarchy
 {
     public class Vegetable : Food
     {
-        public Vegetable(int quantity) : base(quantity)
+        public Vegetable(string foodType, int foodQuantity) : base(foodType, foodQuantity)
         {
         }
 
-        public override string ToString()
+        public override string GetFoodType()
         {
             return "Vegetable";
         }

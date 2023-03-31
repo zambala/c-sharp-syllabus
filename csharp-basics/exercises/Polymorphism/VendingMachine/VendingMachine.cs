@@ -1,153 +1,176 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using VendingMachine.Exceptions;
 
 namespace VendingMachine
 {
     public class VendingMachine : IVendingMachine
     {
-        public readonly string[] AcceptedMoney = { "0,10 €", "0,20 €", "0,50 €", "1,00 €", "2,00 €" };
-        public string Manufacturer { get; set; }
+        public string Manufacturer { get; }
         public bool HasProducts => Array.Exists(Products, product => product.Available > 0);
         public Money Amount { get; set; }
         public Product[] Products { get; set; }
+        public string[] AcceptedCoins = { "£0.10", "£0.20", "£0.50", "£1.00", "£2.00" };
 
-        public VendingMachine(string manufacturer, int amountOfSlots)
+        public VendingMachine(string manufacturer,  Product[] products)
         {
             Manufacturer = manufacturer;
-            Products = new Product[amountOfSlots];
+            Products = products;
+        }
+
+        public VendingMachine(string manufacturer)
+        {
+            Manufacturer = manufacturer;
         }
 
         public Money InsertCoin(Money amount)
         {
-
-            if (!AcceptedMoney.Contains(amount.ToString()))
+            if (AcceptedCoins.Contains(amount.ToString()))
             {
+                Amount = Amount.Add(amount);
                 return amount;
             }
-
-            Amount = Amount.Add(amount);
-            return new Money();
+            else
+            {
+                throw new CoinNotAcceptedException(amount);
+            }
         }
-
+        
         public Money ReturnMoney()
         {
-            if (Amount.GetNumericValueInCents() == 0)
-            {
-                return Amount;
-            }
+            var product = new Product();
+            var returnAmount = Amount.Subtract(product.Price);
 
-            var amountToReturn = Amount;
-            Amount = new Money();
-            Console.WriteLine($"{amountToReturn} returned");
-            return amountToReturn;
-        }
-
-        public bool BuyProduct(int index)
-        {
-            var price = Products[index - 1].Price.GetNumericValueInCents();
-            var balance = Amount.GetNumericValueInCents();
-
-            if (Products[index - 1].Available < 1)
-            {
-                Console.WriteLine($"Sorry, that product is unavailable");
-                return false;
-            }
-
-            if (price > balance)
-            {
-                Console.WriteLine($"Sorry, you can't afford that");
-                return false;
-            }
-
-            Products[index - 1].Available += -1;
-            Amount = Amount.Subtract(Products[index - 1].Price);
-            Console.WriteLine($"Thank you, enjoy your {Products[index - 1].Name}");
-            return true;
+            Console.WriteLine($"{returnAmount} returned");
+            return returnAmount;
         }
 
         public bool AddProduct(string name, Money price, int count)
         {
-            var emptySlot = Array.FindIndex(Products, product => product.Name == null);
+            bool hasemptySlots = false;
+            int index = 0;
 
-            if (emptySlot == -1)
+            if (String.IsNullOrEmpty(name))
             {
-                Console.WriteLine("No free, unlabeled slots! Use \"Update product\"");
-                return false;
+                throw new NameCantBeNullOrEmtyException();
             }
 
-            var productToBeAdded = new Product(name, price, count);
-
-            if (!ProductValidator.Validate(productToBeAdded))
+            if (count <= 0)
             {
-                return false;
+                throw new ProductCountShouldBeMoreThanZeroException();
             }
 
-            Products[emptySlot] = productToBeAdded;
-            Console.WriteLine($"Added {name} in slot {emptySlot + 1}");
-            return true;
+            if (price.NumericValue() < 0.10m)
+            {
+                throw new PriceMustBeHigherException(price);
+            }
+
+            for (int i = 0; i < Products.Length; i++)
+            {
+                if (String.IsNullOrEmpty(Products[i].Name))
+                {
+                    hasemptySlots = true;
+                    index = i;
+                }
+            }
+
+            if (hasemptySlots)
+            {
+                Products[index] = new Product(name, price, count);
+                return true;
+            }
+            else
+            {
+                throw new NoAvailableSlotsException();
+            }
         }
 
         public bool UpdateProduct(int productNumber, string name, Money? price, int amount)
         {
-            if (!IsProductIdValid(productNumber)) return false;
-
-            if (!ProductValidator.Validate(new Product(name, price ?? new Money(1, 1), amount)))
+            int i = productNumber - 1;
+            bool updated = false;
+ 
+            if (name == Products[i].Name && price.Value.NumericValue() == Products[i].Price.NumericValue() && amount == Products[i].Available)
             {
-                return false;
+                throw new ProductNotChangedException();
             }
 
-            if (price != null)
+            if (String.IsNullOrEmpty(name))
             {
-                Products[productNumber - 1].Price = (Money)price;
+                throw new NameCantBeNullOrEmtyException();
             }
 
-            Products[productNumber - 1].Name = name;
-            Products[productNumber - 1].Available = amount;
-            return true;
+            if (price.Value.NumericValue() < 0.10m)
+            {
+                throw new PriceMustBeHigherException(price.Value);
+            }
+
+            if (Products[i].Available != amount)
+            {
+                Products[i].Available = amount;
+                updated = true;
+            }
+
+            if (Products[i].Name != name)
+            {
+                Products[i].Name = name;
+                updated = true;
+            }
+
+            if (price.HasValue)
+            {
+                Products[i].Price = price.Value;
+                updated = true;
+            }
+
+            return updated;
         }
 
-        private bool IsProductIdValid(int productId)
+        public bool BuyProduct(int index)
         {
-            if (productId >= 1 && productId <= Products.Length && Products[productId - 1].Name != null) return true;
-            Console.WriteLine("Invalid product number");
-            return false;
+            var product = Products[index -1];
+            var price = Products[index -1].Price.NumericValue();
+            var balance = Amount.NumericValue();
+            var bought = false;
+
+            if (product.Available < 1)
+            {
+                throw new ProductNotAvailableException();
+            }
+
+            if (price > balance)
+            {
+                throw new NotEnoughBalanceException();
+            }
+            
+            if (balance >= price)
+            {
+                UpdateProduct(index, product.Name, product.Price, product.Available - 1);
+                Amount = Amount.Subtract(product.Price);
+                Console.WriteLine($"Thanks for purchasing {product.Name}");
+                ReturnMoney();
+                bought = true;
+            }
+
+            return bought;
         }
 
-        public string GetAvailableProducts()
+        public string ReturnAvailableProducts()
         {
             if (!HasProducts)
             {
-                return "This vending machine is empty";
+                throw new NoProductsAvailableException();
             }
 
-            var productList = new List<string>();
+            var list = new List<string>();
 
-            for (var i = 0; i < Products.Length; i++)
+            for (int i = 0; i < Products.Length; i++)
             {
-                if (Products[i].Available > 0)
-                {
-                    productList.Add($"{i + 1} - {Products[i]}");
-                }
+                list.Add($"{i+1}.{Products[i]}");
             }
 
-            return string.Join("\n", productList);
-        }
-
-        public string GetAllProducts()
-        {
-            if (!HasProducts)
-            {
-                return "This vending machine is empty";
-            }
-
-            var productList = new List<string>();
-            for (var i = 0; i < Products.Length; i++)
-            {
-                productList.Add(Products[i].Name == null ? $"{i + 1} - empty slot" : $"{i + 1} - {Products[i]}");
-            }
-
-            return string.Join("\n", productList);
+            return String.Join("\n", list);
         }
     }
 }

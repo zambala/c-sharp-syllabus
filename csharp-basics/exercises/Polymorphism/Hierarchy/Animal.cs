@@ -6,24 +6,27 @@ namespace Hierarchy
 {
     public abstract class Animal
     {
-        protected string _animalName;
-        protected string _animalType;
-        protected double _animalWeight;
-        protected int _foodEaten;
+        public string AnimalName { get; }
+        public string AnimalType { get; }
+        public double AnimalWeight { get; }
+        public int FoodEaten { get; protected set; }
 
         protected Animal(string animalName, string animalType, double animalWeight)
         {
-            _animalName = animalName;
-            _animalType = animalType;
-            _animalWeight = animalWeight;
-            _foodEaten = 0;
+            AnimalName = animalName;
+            AnimalType = animalType;
+            AnimalWeight = animalWeight;
         }
 
-        public abstract string MakeSound();
+        public abstract void MakeSound();
 
-        public virtual int Eat(Food food)
+        public abstract void Eat(Food food);
+
+        public abstract void AnimalInfo();
+
+        public override string ToString()
         {
-            return _foodEaten;
+            return $"{AnimalType} {AnimalName} weight: {AnimalWeight:F2} ate {FoodEaten} food\n";
         }
     }
 }

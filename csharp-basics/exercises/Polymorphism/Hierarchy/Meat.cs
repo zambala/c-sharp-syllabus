@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Hierarchy
+﻿namespace Hierarchy
 {
     public class Meat : Food
     {
-        public Meat(int quantity) : base(quantity)
+        public Meat(string foodType, int foodQuantity) : base(foodType, foodQuantity)
         {
         }
 
-        public override string ToString()
+        public override string GetFoodType()
         {
             return "Meat";
         }

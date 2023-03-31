@@ -1,70 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Threading.Tasks.Dataflow;
 
 namespace Hierarchy
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            List<Animal> animals = new List<Animal>();
-            string answer3;
-            int i = 0;
-
-            do
+            var cat = new Cat("Kitty", "grey", 1.1, "Home", "Persian");
+            var tiger = new Tiger("Typcho", "Tiger", 167.5, "Asia");
+            var mouse = new Mouse("steward", "Mouse", 0.25444, "Home");
+            var zebra = new Zebra("Zeee", "Zebra", 30, "Africa");
+            var animals = new List<Animal>
             {
-                Console.WriteLine("Please input the animals type(Zebra, Mouse, Tiger, Cat), name, weight, living region and breed(only for cats).\n" +
-                                  "Separate the words with a space");
-                string[] answer = Console.ReadLine().Split(' ');
+                cat, mouse, tiger, zebra,
+            };
 
-                if (answer[0].ToLower() == "cat")
-                {
-                    animals.Add(new Cat(answer[1], answer[0], double.Parse(answer[2], CultureInfo.InvariantCulture), answer[3], answer[4]));
-                }
-                else if (answer[0].ToLower() == "tiger")
-                {
-                    animals.Add(new Tiger(answer[1], answer[0], double.Parse(answer[2], CultureInfo.InvariantCulture), answer[3]));
-                }
-                else if (answer[0].ToLower() == "zebra")
-                {
-                    animals.Add(new Zebra(answer[1], answer[0], double.Parse(answer[2], CultureInfo.InvariantCulture), answer[3]));
-                }
-                else if (answer[0].ToLower() == "mouse")
-                {
-                    animals.Add(new Mouse(answer[1], answer[0], double.Parse(answer[2], CultureInfo.InvariantCulture), answer[3]));
-                }
+            var veg = new Vegetable("Vegetable", 1);
+            var meat = new Meat("Meat", 1);
 
-                Console.WriteLine(animals[i].MakeSound());
-                Console.WriteLine("Please provide the food (vegetable or meat) and quantity for the animal.\n" +
-                                  "Separate the words with a space");
-                string[] answer2 = Console.ReadLine().Split(' ');
-
-                EatFood(answer2, animals, i);
-
-                Console.WriteLine(animals[i]);
-                i++;
-                Console.WriteLine("Do you want to add more animals? Yes/End");
-                answer3 = Console.ReadLine().ToLower();
-            } while (answer3 != "end");
-
-            string res = String.Join(", ", animals);
-            Console.WriteLine(res);
-        }
-
-        public static void EatFood(string[] answer2, List<Animal> animals, int i)
-        {
-            if (answer2[0].ToLower() == "vegetable")
+            foreach (var animal in animals)
             {
-                Food food = new Vegetable(int.Parse(answer2[1]));
-                animals[i].Eat(food);
+                animal.AnimalInfo();
+                animal.MakeSound();
+                animal.Eat(veg);
+                animal.Eat(meat);
+                Console.WriteLine(animal);
             }
-            else if (answer2[0].ToLower() == "meat")
-            {
-                Food food = new Meat(int.Parse(answer2[1]));
-                animals[i].Eat(food);
-            }
+
+            Console.ReadKey();
         }
     }
 }

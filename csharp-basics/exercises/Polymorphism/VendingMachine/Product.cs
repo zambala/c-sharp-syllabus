@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VendingMachine
+﻿namespace VendingMachine
 {
     public struct Product
     {
+        ///<summary>Gets or sets the available amount of product.</summary>
         public int Available { get; set; }
+        ///<summary>Gets or sets the product price.</summary>
         public Money Price { get; set; }
+        ///<summary>Gets or sets the product name.</summary>
         public string Name { get; set; }
 
-        public Product(string name, Money price, int count)
+        public Product(string name, Money price, int available)
         {
             Name = name;
             Price = price;
-            Available = count;
+            Available = available;
         }
+
         public override string ToString()
         {
-            return $"{Name} - {Price} | {Available} left";
+            return $"{Name}.{Price}|| Available: {Available}";
         }
     }
 }

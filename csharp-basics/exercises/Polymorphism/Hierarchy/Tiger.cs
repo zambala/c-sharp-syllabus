@@ -1,37 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Hierarchy.Exceptions;
 
 namespace Hierarchy
 {
-    public class Tiger : Felime
+    public class Tiger : Feline
     {
-        public Tiger(string animalName, string animalType, double animalWeight, string livingRegion) : base(animalName, animalType, animalWeight, livingRegion)
+        public Tiger(string animalName, string animalType, double animalWeight, string livingRegion)
+            : base(animalName, animalType, animalWeight, livingRegion)
         {
         }
 
-        public override string MakeSound()
+        public override void Eat(Food food)
         {
-            return "ROAAR!!!";
-        }
-
-        public override int Eat(Food food)
-        {
-            if (food.ToString() == "Meat")
+            if (food.GetFoodType() == "Meat")
             {
-                _foodEaten += food.Quantity;
+                FoodEaten += food.FoodQuantity;
+                Console.WriteLine($"{food.GetFoodType()} {FoodEaten}");
             }
             else
             {
-                throw new ArgumentException($"{_animalType} are not eating that type of food!");
+                throw new AnimalDoesNotEatThisFoodException();
             }
-
-            return _foodEaten;
         }
 
-        public override string ToString()
+        public override void MakeSound()
         {
-            return $"{_animalType} [{_animalName}, {_animalWeight}, {_livingRegion}, {_foodEaten}]";
+            Console.WriteLine("Roar");
         }
     }
 }
