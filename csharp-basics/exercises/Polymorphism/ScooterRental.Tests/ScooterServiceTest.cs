@@ -28,8 +28,8 @@ namespace ScooterRental.Test
 
             //Assert
             _inventory.Count.Should().Be(1);
-        }     
-        
+        }
+
         [TestMethod]
         public void AddScooter_AddScooterTwice_ThrowsDublicateScooterExeption()
         {
@@ -98,7 +98,7 @@ namespace ScooterRental.Test
         {
             //Assert
             Action act = () => _scooterService.GetScooters().Should().HaveCount(0);
-            act.Should().Throw<ScooterListIsEmptyExeption>().WithMessage("No scooters available"); 
+            act.Should().Throw<ScooterListIsEmptyExeption>().WithMessage("No scooters available");
         }
 
         [TestMethod]
@@ -115,7 +115,7 @@ namespace ScooterRental.Test
             scooerList.Should().ContainEquivalentOf(new Scooter("1", 0.2m));
             scooerList.Should().ContainEquivalentOf(new Scooter("2", 0.2m));
             scooerList.Should().HaveCount(2);
-            scooerList.Should().OnlyHaveUniqueItems();          
+            scooerList.Should().OnlyHaveUniqueItems();
         }
 
         public void GetScooters_ScooterListCantBeModified()
@@ -124,8 +124,8 @@ namespace ScooterRental.Test
             _inventory.Add(new Scooter("1", 0.2m));
 
             //Act
-            var scooterList = _scooterService.GetScooters();
-            scooterList.Add(new Scooter("2", 0.2m));
+            var scooerList = _scooterService.GetScooters();
+            scooerList.Add(new Scooter("2", 0.2m));
             var scooterList2 = _scooterService.GetScooters();
 
             //Assert
@@ -146,7 +146,7 @@ namespace ScooterRental.Test
         public void GetScootersById_InvalidId_ThrowInvalidIdExpetion()
         {
             //Arrange
-            _scooterService.AddScooter("1", 0.2m); 
+            _scooterService.AddScooter("1", 0.2m);
             //Act
             Action act = () => _scooterService.GetScooterById("");
 

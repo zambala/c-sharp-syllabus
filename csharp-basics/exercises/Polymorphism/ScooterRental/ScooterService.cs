@@ -1,8 +1,7 @@
-﻿using ScooterRental.Exceptions;
-using ScooterRental.Validators;
-using ScooterRental.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using ScooterRental.Exceptions;
+using ScooterRental.Validators;
 
 namespace ScooterRental
 {
@@ -68,11 +67,6 @@ namespace ScooterRental
             }
 
             return scooter;
-        }
-
-        IList<Scooter> IScooterService.GetScooters()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

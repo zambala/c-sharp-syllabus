@@ -2,7 +2,6 @@
 using ScooterRental.Exceptions;
 using ScooterRental.Interfaces;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System;
 using System.Linq;
 
@@ -28,7 +27,7 @@ namespace ScooterRental
 
         public void StartRent(string id)
         {
-            Validators.Validator.IdValidator(id);
+            Validator.IdValidator(id);
 
             var scooter = _scooterService.GetScooterById(id);
 
@@ -48,7 +47,7 @@ namespace ScooterRental
 
         public decimal EndRent(string id)
         {
-            Validators.Validator.IdValidator(id);
+            Validator.IdValidator(id);
 
             var scooter = _scooterService.GetScooterById(id);
 

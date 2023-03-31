@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ScooterRental.Exceptions;
@@ -176,7 +176,7 @@ namespace ScooterRental.Tests
             var rentedScooter1 = new RentedScooter("1", DateTime.UtcNow.AddDays(-15), 0.2m);
             var rentedScooter2 = new RentedScooter("2", DateTime.UtcNow.AddMinutes(-10), 0.2m);
 
-            
+
             _rentedScooters.Add(rentedScooter1);
             _rentedScooters.Add(rentedScooter2);
 

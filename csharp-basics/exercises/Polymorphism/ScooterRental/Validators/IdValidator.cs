@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System;
-using ScooterRental.Exceptions;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using ScooterRental.Exceptions;
 
 namespace ScooterRental.Validators
 {
