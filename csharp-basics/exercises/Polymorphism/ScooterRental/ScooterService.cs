@@ -1,22 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using ScooterRental.Exceptions;
+using ScooterRental.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
-using ScooterRental.Exceptions;
-using ScooterRental.Validators;
 
 namespace ScooterRental
 {
     public class ScooterService : IScooterService
     {
-        private List<Scooter> _scooters;
+        private readonly List<Scooter> _scooters;
 
         public ScooterService(List<Scooter> inventory)
         {
             _scooters = inventory;
         }
-
         public void AddScooter(string id, decimal pricePerMinute)
         {
-            Validator.IdValidator(id);
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                throw new InvalidIDException();
+            }
 
             if (pricePerMinute <= 0)
             {
@@ -31,42 +33,40 @@ namespace ScooterRental
             _scooters.Add(new Scooter(id, pricePerMinute));
         }
 
-        public void RemoveScooter(string id)
+        public Scooter GetScooterById(string scooterId)
         {
-            var scooter = _scooters.FirstOrDefault(scooter => scooter.Id == id);
-
-            Validator.IdValidator(id);
-
-            if (scooter == null)
+            if (string.IsNullOrWhiteSpace(scooterId))
             {
-                throw new ScooterDoesntExistException(id);
+                throw new SearchScooterInvalidIDException();
             }
 
-            _scooters.Remove(scooter);
+            if (_scooters.Any(scooter => scooter.Id != scooterId))
+            {
+                throw new ScooterWithIDDoesNotExistException(scooterId);
+            }
+
+            return _scooters.Find(scooter => scooter.Id == scooterId);
         }
 
         public IList<Scooter> GetScooters()
         {
-            if (_scooters.Count.Equals(0))
-            {
-                throw new ScooterListIsEmptyExeption();
-            }
-
-            return _scooters.ToList();
+            return _scooters.FindAll(scooter => !scooter.IsRented).ToList();
         }
 
-        public Scooter GetScooterById(string scooterId)
+        public void RemoveScooter(string id)
         {
-            var scooter = _scooters.FirstOrDefault(scooter => scooter.Id == scooterId);
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                throw new InvalidIDException();
+            }
 
-            Validator.IdValidator(scooterId);
+            var scooter = _scooters.FirstOrDefault(scooter => scooter.Id == id);
 
             if (scooter == null)
             {
-                throw new ScooterDoesntExistException(scooterId);
+                throw new ScooterDoesNotExistException(id);
             }
-
-            return scooter;
+            _scooters.Remove(scooter);
         }
     }
 }

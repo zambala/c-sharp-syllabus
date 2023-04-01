@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScooterRental
+﻿namespace ScooterRental.Interfaces
 {
     public interface IRentalCompany
     {
@@ -29,7 +23,7 @@ namespace ScooterRental
         /// </summary>
         /// <param name="year">Year of the report. Sum all years if value is not set.</param>
         /// <param name="includeNotCompletedRentals">Include income from the scooters that are rented out (rental has not ended yet) and
-        /// calculate rental
+        ///calculate rental
         /// price as if the rental would end at the time when this report was requested.</param>
         /// <returns>The total price of all rentals filtered by year if given.</returns>
         decimal CalculateIncome(int? year, bool includeNotCompletedRentals);

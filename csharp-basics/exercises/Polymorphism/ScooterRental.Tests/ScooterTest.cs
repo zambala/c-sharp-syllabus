@@ -6,7 +6,7 @@ namespace ScooterRental.Tests
     [TestClass]
     public class ScooterTest
     {
-        private Scooter? _scooter;
+        private Scooter _scooter;
 
         [TestMethod]
         public void ScooterCreation_IDAndPricePerMinuteSetCorrectly()

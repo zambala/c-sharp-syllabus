@@ -1,14 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FluentAssertions;
-using ScooterRental.Exceptions;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ScooterRental.Exceptions;
+using ScooterRental.Interfaces;
 
-namespace ScooterRental.Test
+namespace ScooterRental.Tests
 {
     [TestClass]
-    public class ScooterServiceTest
+    public class ScooterServiceTests
     {
         private IScooterService _scooterService;
         private List<Scooter> _inventory;
@@ -23,150 +25,152 @@ namespace ScooterRental.Test
         [TestMethod]
         public void AddScooter_AddValidScooter_ScooterAdded()
         {
-            //Act
             _scooterService.AddScooter("1", 0.2m);
-
-            //Assert
             _inventory.Count.Should().Be(1);
         }
 
         [TestMethod]
-        public void AddScooter_AddScooterTwice_ThrowsDublicateScooterExeption()
+        public void AddScooter_AddScooterTwice_ThrowsDuplicateScooterException()
         {
-            //Act
             _scooterService.AddScooter("1", 0.2m);
-            Action act = () => _scooterService.AddScooter("1", 0.2m);
 
-            //Assert
-            act.Should().Throw<DuplicateScooterException>().WithMessage("Scooter with ID 1 already exists");
+            Action act = () =>
+                _scooterService.AddScooter("1", 0.2m);
+            act.Should().Throw<DuplicateScooterException>()
+                .WithMessage("Scooter with id 1 already exists");
         }
 
         [TestMethod]
-        public void AddScooter_AddScooterWithNegtiveOrZeroPrice_ThrowInvalidPriceException()
+        public void AddScooter_AddScooterWithNegativePriceZeroOrLess_ThrowsInvalidPriceException()
         {
-            //Act
-            Action act = () => _scooterService.AddScooter("1", -0.2m);
-
-            //Assert
-            act.Should().Throw<InvalidPriceException>().WithMessage("Given price -0.2 not valid");
+            Action act = () =>
+                _scooterService.AddScooter("1", -0.2m);
+            act.Should().Throw<InvalidPriceException>()
+                .WithMessage("Given price -0.2 not valid.");
         }
 
         [TestMethod]
-        public void AddScooter_AddScooterWithNullOrEmptyId_ThrowInvalideIdException()
+        public void AddScooter_AddScooterNullOrEmptyID_ThrowsInvalidIDException()
         {
-            //Act
-            Action act = () => _scooterService.AddScooter("", 0.2m);
-
-            //Assert
-            act.Should().Throw<InvalidIdException>().WithMessage("Id cannot be null or empty");
+            Action act = () =>
+                _scooterService.AddScooter("", 0.2m);
+            act.Should().Throw<InvalidIDException>()
+                .WithMessage("Id cannot be null or empty.");
         }
 
         [TestMethod]
         public void RemoveScooter_ScooterExists_ScooterIsRemoved()
         {
-            //Act
-            _scooterService.AddScooter("1", 0.2m);
+            _inventory.Add(new Scooter("1", 0.2m));
+
             _scooterService.RemoveScooter("1");
 
-            //Assert
             _inventory.Any(scooter => scooter.Id == "1").Should().BeFalse();
             _inventory.Count.Should().Be(0);
         }
 
         [TestMethod]
-        public void RemoveScooter_ScooterDeosntExists_ThrowsScooterDoesntExistException()
+        public void RemoveScooter_ScooterDoesNotExist_ThrowsScooterDoesNotExistException()
         {
-            //Act
-            Action act = () => _scooterService.RemoveScooter("1");
+            Action act = () =>
+                _scooterService.RemoveScooter("1");
 
-            //Assert
-            act.Should().Throw<ScooterDoesntExistException>().WithMessage("Scooter with Id 1 doest exist");
+            act.Should().Throw<ScooterDoesNotExistException>()
+                .WithMessage("Scooter with Id 1 does not exist.");
         }
 
         [TestMethod]
-        public void RemoveScooter_NullOrEmptyIdGiven_ThrowInvalideIdException()
+        public void RemoveScooter_RemoveScooterNullOrEmptyIDGiven_ThrowsInvalidIDException()
         {
-            //Act
-            Action act = () => _scooterService.AddScooter("", 0.2m);
+            Action act = () =>
+                _scooterService.RemoveScooter("");
 
-            //Assert
-            act.Should().Throw<InvalidIdException>().WithMessage("Id cannot be null or empty");
+            act.Should().Throw<InvalidIDException>()
+                .WithMessage("Id cannot be null or empty.");
         }
 
         [TestMethod]
-        public void GetScooters_ScooterListIsEmpty_ThrowScooterListIsEmptyExeption()
+        public void GetScooter_GetAllAvailableScootersInInventory_ReturnedAllExistingScooters()
         {
-            //Assert
-            Action act = () => _scooterService.GetScooters().Should().HaveCount(0);
-            act.Should().Throw<ScooterListIsEmptyExeption>().WithMessage("No scooters available");
+            _scooterService.GetScooters().Count.Should().Be(0);
         }
 
         [TestMethod]
-        public void GetScooters_ScooterList_ReturnScooterList()
+        public void GetScooter_AddingScooter_CheckIfReturnsScooter()
         {
-            //Arrange
+            _inventory.Add(new Scooter("1", 0.2m));
+            _scooterService.GetScooters().Count.Should().Be(1);
+        }
+
+        [TestMethod]
+        public void GetScooter_AddingMultipleScooters_CheckIfReturnsMultipleScooters()
+        {
             _inventory.Add(new Scooter("1", 0.2m));
             _inventory.Add(new Scooter("2", 0.2m));
 
-            //Act
-            var scooerList = _scooterService.GetScooters();
-
-            //Assert
-            scooerList.Should().ContainEquivalentOf(new Scooter("1", 0.2m));
-            scooerList.Should().ContainEquivalentOf(new Scooter("2", 0.2m));
-            scooerList.Should().HaveCount(2);
-            scooerList.Should().OnlyHaveUniqueItems();
+            _scooterService.GetScooters().Count.Should().Be(2);
         }
 
-        public void GetScooters_ScooterListCantBeModified()
+        [TestMethod]
+        public void GetScooter_AddingTwoScooters_OnlyOneIsAvailable()
         {
-            //Arrange
             _inventory.Add(new Scooter("1", 0.2m));
+            var rentedScooter = new Scooter("2", 0.2m);
+            rentedScooter.IsRented = true;
+            _inventory.Add(rentedScooter);
 
-            //Act
-            var scooerList = _scooterService.GetScooters();
-            scooerList.Add(new Scooter("2", 0.2m));
-            var scooterList2 = _scooterService.GetScooters();
-
-            //Assert
-            scooterList2.Should().HaveCount(1);
+            _scooterService.GetScooters().Count.Should().Be(1);
         }
 
         [TestMethod]
-        public void GetScootersById_IdDoesntExist_ThrowsScooterDoesntExistException()
+        public void GetScooter_ReturnListOfScooters()
         {
-            //Act
-            Action act = () => _scooterService.GetScooterById("2");
+            _inventory.Add(new Scooter("1", 0.2m));
+            var scooter = _scooterService.GetScooters();
+            scooter.Add(new Scooter("2", 0.2m));
+            var scooterList_2 = _scooterService.GetScooters();
 
-            //Assert
-            act.Should().Throw<ScooterDoesntExistException>().WithMessage("Scooter with Id 2 doest exist");
+            scooterList_2.Count.Should().Be(1);
         }
 
         [TestMethod]
-        public void GetScootersById_InvalidId_ThrowInvalidIdExpetion()
+        public void GetScooterByID_AddScooter_CheckIfReturnsScooterWithNeededID()
         {
-            //Arrange
-            _scooterService.AddScooter("1", 0.2m);
-            //Act
-            Action act = () => _scooterService.GetScooterById("");
+            var scooter = new Scooter("1", 0.2m);
+            _inventory.Add(scooter);
 
-            //Assert
-            act.Should().Throw<InvalidIdException>().WithMessage("Id cannot be null or empty");
+            _scooterService.GetScooterById("1").Should().Be(scooter);
         }
 
         [TestMethod]
-        public void GetScootersById_RetrunsScooter()
+        public void GetScooterByID_GetScooterWithNonExistentID_ThrowsScooterWithIDDoesNotExistException()
         {
-            //Arrange
-            _scooterService.AddScooter("1", 0.2m);
+            _inventory.Add(new Scooter("1", 0.2m));
+            Action act = () =>
+                _scooterService.GetScooterById("2");
 
-            //Act
-            Scooter scooter1 = _scooterService.GetScooterById("1");
+            act.Should().Throw<ScooterWithIDDoesNotExistException>()
+                .WithMessage("Scooter with ID 2 does not exist.");
+        }
 
-            //Assert
-            string idExpected = "1";
-            string scooter1Id = scooter1.Id;
-            scooter1Id.Should().Be(idExpected);
+        [TestMethod]
+        public void GetScooterByID_ScooterNullOrEmptyIDGiven_ThrowsInvalidIDException()
+        {
+            Action act = () =>
+                _scooterService.GetScooterById("");
+
+            act.Should().Throw<SearchScooterInvalidIDException>()
+                .WithMessage("Id cannot be null or empty.");
+        }
+
+        [TestMethod]
+        public void GetScooterByID_ScooterIsRented_CheckIfReturnsID()
+        {
+            var rentedScooter = new Scooter("1", 0.2m);
+            rentedScooter.IsRented = true;
+            _inventory.Add(rentedScooter);
+
+            _scooterService.GetScooterById("1").Should().Be(rentedScooter);
         }
     }
 }

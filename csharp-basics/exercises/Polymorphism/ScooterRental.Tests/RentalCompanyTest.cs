@@ -1,192 +1,162 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ScooterRental.Exceptions;
 using ScooterRental.Interfaces;
 
 namespace ScooterRental.Tests
 {
     [TestClass]
-    public class RentalCompanyTest
+    public class RentalCompanyTests
     {
-
-        private IScooterService _scooterService;
-        private IRentalCompany _company;
-        private IRentPriceCalculator _priceCalculator;
+        private IRentalCompany _rentalCompany;
+        private List<Rent> _rentalList;
+        private ScooterService _scooter;
         private List<Scooter> _inventory;
-        private List<RentedScooter> _rentedScooters;
 
         [TestInitialize]
         public void Setup()
         {
             _inventory = new List<Scooter>();
-            _scooterService = new ScooterService(_inventory);
-            _rentedScooters = new List<RentedScooter>();
-            _priceCalculator = new RentPriceCalcualtor();
-            _company = new RentalCompany("CompanyName", _rentedScooters, _scooterService, _priceCalculator);
-            _scooterService.AddScooter("1", 0.2m);
-            _scooterService.AddScooter("2", 0.2m);
-            _scooterService.AddScooter("3", 0.2m);
-
-        }
-        [TestMethod]
-        public void StartRent_StartScooterRent_ScooterIsRented()
-        {
-            //Act
-            _company.StartRent("1");
-
-            //Asserts
-            _scooterService.GetScooterById("1").IsRented.Should().BeTrue();
+            _scooter = new ScooterService(_inventory);
+            _rentalList = new List<Rent>();
+            _rentalCompany = new RentalCompany("RudoScoo", _scooter, _rentalList);
         }
 
         [TestMethod]
-        public void StartRent_InvalidId_ThrowInvalidIdExpetion()
+        public void StartRent_StartRentWithScooterAlreadyRenter_ThrowScooterRentedException()
         {
-            //Act
-            Action act = () => _company.StartRent("");
+            var newScooter = new Scooter("1", 0.2m);
+            newScooter.IsRented = true;
+            _inventory.Add(newScooter);
 
-            //Assert
-            act.Should().Throw<InvalidIdException>().WithMessage("Id cannot be null or empty");
+            Action act = () =>
+                _rentalCompany.StartRent(newScooter.Id);
+
+            act.Should().Throw<ScooterRentedException>()
+                .WithMessage("This scooter is already rented.");
         }
 
         [TestMethod]
-        public void StartRent_ScooterDeosntExists_ThrowsScooterDoesntExistException()
+        public void StartRent_StartRentWithScooter_ShowsThatScooterIsRented()
         {
-            //Act
-            Action act = () => _company.StartRent("4");
+            var newScooter = new Scooter("1", 0.2m);
+            _scooter.AddScooter(newScooter.Id, newScooter.PricePerMinute);
 
-            //Assert
-            act.Should().Throw<ScooterDoesntExistException>().WithMessage("Scooter with Id 4 doest exist");
+            var rentedScooter = new Rent(newScooter.Id, newScooter.PricePerMinute, DateTime.Now);
+            _rentalCompany.StartRent(rentedScooter.Id);
+
+            _rentalList.Count.Should().Be(1);
         }
 
         [TestMethod]
-        public void StartRent_ScooterAlreadyRented_ThrowsScooterAlreadyRentedException()
+        public void EndRent_EndRentingOfScooter_ScooterIsNotRented()
         {
-            var scooter = _scooterService.GetScooterById("1");
-            var rentedScooter = new RentedScooter("1", DateTime.UtcNow, 0.2m);
-            scooter.IsRented = true;
 
-            //Act
-            _rentedScooters.Add(rentedScooter);
-            Action act = () => _company.StartRent("1");
+            var scooter = new Scooter("1", 0.2m);
+            _scooter.AddScooter(scooter.Id, scooter.PricePerMinute);
+            _scooter.GetScooterById(scooter.Id).IsRented = true;
 
-            //Assert
-            act.Should().Throw<ScooterAlreadyRentedException>().WithMessage("Scooter With 1 already rented");
+            var rentedScooter = new Rent(scooter.Id, scooter.PricePerMinute, DateTime.Now);
+            _rentalList.Add(rentedScooter);
+            _rentalCompany.EndRent(rentedScooter.Id);
+
+            _scooter.GetScooterById(scooter.Id).IsRented.Should().BeFalse();
+            rentedScooter.EndTime.Should().HaveValue();
         }
 
         [TestMethod]
-        public void EndRent_EndScooterRent_ScooterIsReturned()
+        public void EndRent_ScooterDoesNotExist_ThrowsScooterDoesNotExistException()
         {
-            //Arange
-            var scooter = _scooterService.GetScooterById("1");
-            var rentedScooter = new RentedScooter("1", DateTime.UtcNow, 0.2m);
-            scooter.IsRented = true;
+            var newScooter = new Scooter("2", 0.2m);
+            _scooter.AddScooter(newScooter.Id, newScooter.PricePerMinute);
+            _scooter.GetScooterById(newScooter.Id).IsRented = true;
+            var rentedscooter = new Rent(newScooter.Id, newScooter.PricePerMinute, DateTime.Now);
+            _rentalList.Add(rentedscooter);
 
-            //Act
-            _rentedScooters.Add(rentedScooter);
-            _company.EndRent("1");
+            Action act = () =>
+                _rentalCompany.EndRent("1");
 
-            //Assert
+            act.Should().Throw<ScooterWithIDDoesNotExistException>()
+                .WithMessage($"Scooter with ID 1 does not exist.");
+        }
+
+        [TestMethod]
+        public void EndRent_EndRentWithScooterWithInValidID_ThrowsInvalidIDException()
+        {
+            var newScooter = new Scooter("2", 0.2m);
+            _scooter.AddScooter(newScooter.Id, newScooter.PricePerMinute);
+            _scooter.GetScooterById(newScooter.Id).IsRented = true;
+            var rentedScooter = new Rent(newScooter.Id, newScooter.PricePerMinute, DateTime.Now);
+            _rentalList.Add(rentedScooter);
+
+            Action act = () =>
+                _rentalCompany.EndRent("");
+
+            act.Should().Throw<SearchScooterInvalidIDException>()
+                .WithMessage("Id cannot be null or empty.");
+        }
+
+        [TestMethod]
+        public void EndRent_EndRentOneDay()
+        {
+            var scooter = new Scooter("1", 0.2m);
+            _scooter.AddScooter(scooter.Id, scooter.PricePerMinute);
+            _scooter.GetScooterById(scooter.Id).IsRented = true;
+            var rentedScooter = new Rent(scooter.Id, scooter.PricePerMinute, DateTime.Now.AddMinutes(-10));
+            _rentalList.Add(rentedScooter);
+
+            var result = _rentalCompany.EndRent(rentedScooter.Id);
             scooter.IsRented.Should().BeFalse();
-            rentedScooter.EndTime.HasValue.Should().BeTrue();
-        }
 
-        [TestMethod]
-        public void EndRent_InvalidId_ThrowInvalidIdExpetion()
-        {
-            //Act
-            Action act = () => _company.EndRent("");
-
-            //Assert
-            act.Should().Throw<InvalidIdException>().WithMessage("Id cannot be null or empty");
-        }
-
-        [TestMethod]
-        public void EndRent_ScooterDeosntExists_ThrowsScooterDoesntExistException()
-        {
-            //Act
-            Action act = () => _company.EndRent("4");
-
-            //Assert
-            act.Should().Throw<ScooterDoesntExistException>().WithMessage("Scooter with Id 4 doest exist");
-        }
-
-        [TestMethod]
-        public void EndRent_EndScooterRent_SameDayReturn()
-        {
-            //Arange
-            var scooter = _scooterService.GetScooterById("1");
-            var rentedScooter = new RentedScooter("1", DateTime.UtcNow.AddMinutes(-10), 0.2m);
-            _rentedScooters.Add(rentedScooter);
-
-            //Act
-            var result = _company.EndRent("1");
-
-            //Assert
-            scooter.IsRented.Should().BeFalse();
             rentedScooter.EndTime.HasValue.Should().BeTrue();
             result.Should().Be(2);
         }
 
         [TestMethod]
-        public void EndRent_EndScooterRent_24hReturn()
+        [DataRow(2022, true, 1892)]
+        [DataRow(2020, true, 24)]
+        [DataRow(2021, true, 656)]
+        [DataRow(2022, false, 1892)]
+        [DataRow(null, false, 2572)]
+        [DataRow(null, true, -34)]
+
+        public void CalculateIncome_CalculateIncomeWithTwoScootersInSameYear(int? year, bool includeNotCompletedRentals, double expectedResult)
         {
-            //Arange
-            var scooter = _scooterService.GetScooterById("1");
-            var rentedScooter = new RentedScooter("1", DateTime.UtcNow.AddDays(-1), 0.2m);
-            _rentedScooters.Add(rentedScooter);
+            decimal expect = Convert.ToDecimal(expectedResult);
+            MockHistoryScooters();
+            var result = _rentalCompany.CalculateIncome(year, includeNotCompletedRentals);
 
-            //Act
-            var result = _company.EndRent("1");
-
-            //Assert
-            scooter.IsRented.Should().BeFalse();
-            rentedScooter.EndTime.HasValue.Should().BeTrue();
-            result.Should().Be(40);
+            result.Should().Be(expect);
         }
 
         [TestMethod]
-        public void EndRent_EndScooterRent_15DayReturn()
+
+        public void Name_GetName_Name()
         {
-            //Arange
-            var scooter = _scooterService.GetScooterById("1");
-            var rentedScooter = new RentedScooter("1", DateTime.UtcNow.AddDays(-15), 0.2m);
-            _rentedScooters.Add(rentedScooter);
-
-            //Act
-            var result = _company.EndRent("1");
-
-            //Assert
-            scooter.IsRented.Should().BeFalse();
-            rentedScooter.EndTime.HasValue.Should().BeTrue();
-            result.Should().Be(320);
+            _rentalCompany.Name.Should().Be("RudoScoo");
         }
 
-        [TestMethod]
-        public void CalculateIncome_CalculateAnnualIncome()
+        public void MockHistoryScooters()
         {
-            //Arange
-            var scooter1 = _scooterService.GetScooterById("1");
-            var scooter2 = _scooterService.GetScooterById("2");
+            _rentalList.Add(new Rent("1", 0.2m, new DateTime(2019, 12, 31, 23, 00, 0)));
+            _rentalList[0].EndTime = new DateTime(2020, 1, 1, 1, 0, 0);//24
 
-            scooter1.IsRented = true;
-            scooter2.IsRented = true;
+            _rentalList.Add(new Rent("2", 0.2m, new DateTime(2020, 12, 1, 23, 00, 0)));
+            _rentalList[1].EndTime = new DateTime(2021, 1, 1, 1, 0, 0);//624
 
-            var rentedScooter1 = new RentedScooter("1", DateTime.UtcNow.AddDays(-15), 0.2m);
-            var rentedScooter2 = new RentedScooter("2", DateTime.UtcNow.AddMinutes(-10), 0.2m);
+            _rentalList.Add(new Rent("3", 0.2m, new DateTime(2021, 11, 1, 23, 0, 0)));
+            _rentalList[2].EndTime = new DateTime(2021, 11, 2, 20, 0, 0);//32
 
+            _rentalList.Add(new Rent("4", 0.2m, new DateTime(2022, 9, 1, 1, 0, 0)));
+            _rentalList[3].EndTime = new DateTime(2022, 9, 2, 3, 0, 0);//40
 
-            _rentedScooters.Add(rentedScooter1);
-            _rentedScooters.Add(rentedScooter2);
+            _rentalList.Add(new Rent("5", 0.2m, new DateTime(2022, 6, 1, 1, 0, 0)));
+            _rentalList[4].EndTime = new DateTime(2022, 9, 1, 1, 0, 0);//1852
 
-            _company.EndRent("2");
-
-            //Act
-            var result = _company.CalculateIncome(2022, true);
-
-            //Assert
-            result.Should().Be(322);
+            _rentalList.Add(new Rent("6", 0.2m, DateTime.Now.AddMinutes(-10)));//2
         }
     }
 }
