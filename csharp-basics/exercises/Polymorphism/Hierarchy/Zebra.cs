@@ -1,37 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Hierarchy.Exceptions;
 
 namespace Hierarchy
 {
     public class Zebra : Mammal
     {
-        public Zebra(string animalName, string animalType, double animalWeight, string livingRegion) : base(animalName, animalType, animalWeight, livingRegion)
+        
+        public Zebra(string animalName, string animalType, double animalWeight, string livingRegion)
+            : base(animalName, animalType, animalWeight, livingRegion)
         {
         }
 
-        public override string MakeSound()
+        public override void MakeSound()
         {
-            return "Bark-Bark";
+            Console.WriteLine("zebra noise?");
         }
 
-        public override int Eat(Food food)
+        public override void Eat(Food food)
         {
-            if (food.ToString() == "Vegetable")
+            if (food.GetFoodType() == "Vegetable")
             {
-                _foodEaten += food.Quantity;
+                FoodEaten += food.FoodQuantity;
+                Console.WriteLine($"{food.GetFoodType()} {FoodEaten}");
             }
             else
             {
-                throw new ArgumentException($"{_animalType} are not eating that type of food!");
+                throw new AnimalDoesNotEatThisFoodException();
             }
-
-            return _foodEaten;
-        }
-
-        public override string ToString()
-        {
-            return $"{_animalType} [{_animalName}, {_animalWeight}, {_livingRegion}, {_foodEaten}]";
         }
     }
 }

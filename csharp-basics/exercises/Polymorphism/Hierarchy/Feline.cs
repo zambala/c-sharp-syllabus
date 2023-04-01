@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Hierarchy
 {
-    public abstract class Felime : Mammal
+    public abstract class Feline : Mammal
     {
-        protected Felime(string animalName, string animalType, double animalWeight, string livingRegion)
+        protected Feline(string animalName, string animalType, double animalWeight, string livingRegion)
             : base(animalName, animalType, animalWeight, livingRegion)
         {
         }

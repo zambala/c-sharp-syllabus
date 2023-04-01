@@ -6,16 +6,14 @@ namespace Hierarchy
 {
     public abstract class Food
     {
-        protected int _quantity;
+        private string _foodType;
+        public int FoodQuantity { get; }
+        public abstract string GetFoodType();
 
-        protected Food(int quantity)
+        protected Food(string foodType, int foodQuantity)
         {
-            _quantity = quantity;
-        }
-        public int Quantity
-        {
-            get => _quantity;
-            protected set => _quantity = value;
+            _foodType = foodType;
+            FoodQuantity = foodQuantity;
         }
     }
 }

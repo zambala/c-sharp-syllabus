@@ -4,29 +4,35 @@ using System.Text;
 
 namespace Hierarchy
 {
-    public class Cat : Felime
+    public class Cat : Feline
     {
-        private string _breed;
+        public string CatBreed { get; }
 
-        public Cat(string animalName, string animalType, double animalWeight, string livingRegion, string breed) : base(animalName, animalType, animalWeight, livingRegion)
+        public Cat(string animalName, string animalType, double animalWeight, string livingRegion, string catBreed)
+            : base(animalName, animalType, animalWeight, livingRegion)
         {
-            _breed = breed;
+            CatBreed = catBreed;
         }
 
-        public override string MakeSound()
+        public override void Eat(Food food)
         {
-            return "Meowwww";
+            FoodEaten += food.FoodQuantity;
+            Console.WriteLine($"{food.GetFoodType()} {FoodEaten}");
         }
 
-        public override int Eat(Food food)
+        public override void MakeSound()
         {
-            _foodEaten += food.Quantity;
-            return _foodEaten;
+            Console.WriteLine("Meow");
+        }
+
+        public override void AnimalInfo()
+        {
+            Console.WriteLine($"{AnimalType} {AnimalName} {AnimalWeight} {LivingRegion} {CatBreed}");
         }
 
         public override string ToString()
         {
-            return $"{_animalType} [{_animalName}, {_breed}, {_animalWeight}, {_livingRegion}, {_foodEaten}]";
+            return $"{AnimalType} {AnimalName}, {CatBreed},weight: {AnimalWeight:F2} lives at: {LivingRegion} ate {FoodEaten} food\n";
         }
     }
 }

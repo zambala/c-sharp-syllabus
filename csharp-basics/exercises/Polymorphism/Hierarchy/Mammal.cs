@@ -6,11 +6,22 @@ namespace Hierarchy
 {
     public abstract class Mammal : Animal
     {
-        protected string _livingRegion;
+        public string LivingRegion { get; }
 
-        protected Mammal(string animalName, string animalType, double animalWeight, string livingRegion) : base(animalName, animalType, animalWeight)
+        protected Mammal(string animalName, string animalType, double animalWeight, string livingRegion)
+            : base(animalName, animalType, animalWeight)
         {
-            _livingRegion = livingRegion;
+            LivingRegion = livingRegion;
+        }
+
+        public override void AnimalInfo()
+        {
+            Console.WriteLine($"{AnimalType} {AnimalName} {AnimalWeight} {LivingRegion}");
+        }
+
+        public override string ToString()
+        {
+            return $"{AnimalType} {AnimalName} Weight: {AnimalWeight:F2} lives at: {LivingRegion} ate {FoodEaten} food\n";
         }
     }
 }
